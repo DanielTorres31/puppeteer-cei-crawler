@@ -1,5 +1,6 @@
 import { Page } from 'puppeteer'
 import { writeFile } from 'fs/promises'
+import { resolve } from 'path'
 
 import PuppeteerController from './controller/PuppeteerController'
 import LoginController from './controller/LoginController'
@@ -37,13 +38,14 @@ async function main() {
 }
 
 function saveJSON(content: any, fileName: string) {
-    const path = `D:\\repo\\pessoal\\tracking-investments\\packages\\crawler\\files\\${fileName}-${Date.now()}.json`
+    const path = resolve(
+        __dirname,
+        '..',
+        '..',
+        'files',
+        `${fileName}-${Date.now()}.json`
+    )
     return writeFile(path, JSON.stringify(content))
-}
-
-function saveHTML(content: string, fileName: string) {
-    const path = `D:\\repo\\pessoal\\tracking-investments\\packages\\crawler\\pages\\${fileName}.html`
-    return writeFile(path, content)
 }
 
 function skipStylesRequests(page: Page) {
